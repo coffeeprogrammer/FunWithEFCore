@@ -16,5 +16,7 @@ namespace EFCore1
         Task Update(int id, TEntity entity);
         Task Delete(int id);
 
+        
+
     }
 }

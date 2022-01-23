@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace EFCore1
 {
-    class GenericRepository<TEntity> : IGenericRepository<TEntity>
+    public class GenericRepository<TEntity> : IGenericRepository<TEntity>
         where TEntity : class, IEntity
     {
 
@@ -33,20 +34,23 @@ namespace EFCore1
         public async Task Create(TEntity entity)
         {
             await _dbContext.Set<TEntity>().AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();  // Do this in the unit of work
         }
 
         public async Task Update(int id, TEntity entity)
         {
             _dbContext.Set<TEntity>().Update(entity);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync(); // Do this in the unit of work
         }
 
         public async Task Delete (int id)
         {
             var entity = await _dbContext.Set<TEntity>().FindAsync(id);
             _dbContext.Set<TEntity>().Remove(entity);
-            await _dbContext.SaveChangesAsync();
+            //await _dbContext.SaveChangesAsync();  // Do this in the unit of work
         }
+
+
+
     }
 }
